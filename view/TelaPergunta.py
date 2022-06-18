@@ -1,6 +1,6 @@
 from tela import Tela
 
-class TelaJogador(Tela):
+class TelaPergunta(Tela):
     def __init__(self):
         super()__init__()
          pass
