@@ -1,19 +1,30 @@
 from pergunta import Pergunta
-from tela_Pergunta import Tela_Pergunta
+from telaPergunta import TelaPergunta
 
 class Controlador_Pergunta:
   # fazer aqui tratamento dos dados, caso os parametros sejam diferentes do esperado
-  def __init__(self, Tela_Pergunta ):
-    super().__init__(cpf, nome)
-      self.__tela_Pergunta = Tela_Pergunta
+  def __init__(self, TelaPergunta):
+    
+    super().__init__(pergunta, resposta, alternativas, temas)
+    self.__telaPergunta = TelaPergunta
+    self.__pergunta = pergunta
+    self.__perguntas = []
+    self.__temas = []
+    self.__alternativas = []
+    self.__resposta = resposta
 
   @property
   def incluir_Pergunta(self):
     #verificar se a pta ja n existe (colocar os ids em um array?)
 
+    dados_pergunta = self.__telaPergunta.cadastrar_pergunta()
+    #tal qual o controlador_livros do pequeno exemplo mvc
+    pergunta = Pergunta(dados_livro["id"], dados_livro["pergunta"], dados_livro["resposta"], dados_livro["alternativas"], dados_livro["tema"])
+    self.__perguntas.append(pergunta)
+
     #caso pergunta n exista ainda
     if id.pergunta() not in perguntas:
-      perguntas.append(id, pergunta, resposta, alternativas, temas)
+      perguntas.append(id, pergunta, resposta, alternativas, temas) #arrumar isso aq, duplicado(linha 23)
     else:
       print("Pergunta já foi adicionada!")
       #Colocar uma exceção nessa parte
@@ -54,9 +65,11 @@ class Controlador_Pergunta:
     else:
       print("Opção inválida")
 
-  @property
-  def temas(self):
-    return self__temas
+  def retornar(self):
+    self.__controladorPrincipal.abre_tela()
+
+  def abre_tela(self):
+    lista_opcoes = {1: self.cadastrar_pergunta, 2: self.alterar_pergunta, 3: self.lista_perguntas, 4: self.excluir_perguntas, 0: self.retornar}  
 
 
   def listar_perguntas_por_tema(self, tema):
