@@ -25,3 +25,9 @@ class Jogador():
     def pontos(self):
         pontos = self.__acertos - self.__erros
         return pontos
+
+    def acertou(self):
+        self.__acertos =+ 1
+
+    def errou(self):
+        self.__erros =- 1
