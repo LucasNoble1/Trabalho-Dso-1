@@ -1,10 +1,11 @@
 from telaAbstract import Tela
-from ControladorJogador import ControladorJogador
+from controladorJogador import ControladorJogador
 
 class TelaJogador(Tela):
     def __init__(self, controlador: ControladorJogador ):
         super()__init__()
-         self.__controlador = controlador
+        if isinstance(controlador, ControladorJogador):
+            self.__controlador = controlador
 
 
     def nome_jogador(self , mensagem : str ):

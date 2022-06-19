@@ -14,16 +14,15 @@ class Tela(ABC):
             valor_lido = input(mensagem)
             try:
                 inteiro = int(valor_lido)
-                if inteiros_validos and inteiro not in inteiros_validos:
-                    raise ValueError
+                if inteiros_validos and inteiro  in inteiros_validos:
+                    return inteiro
             except ValueError
                 print("Valor incorreto: digite um numero valido")
                 if interios_validos:
-                    print("Validos validos:", inteiros_validos)
-        return valor_lido
+                    print("Valores validos:", inteiros_validos)
+
 
     def mostrar_mensagem(self, mensagem: str = ""):
-        print("\n")
         print(mensagem)
-        print("\n")
+
 
