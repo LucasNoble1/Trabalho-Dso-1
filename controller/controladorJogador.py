@@ -1,15 +1,14 @@
-from Jogador.py import Jogador
-from TelaJogador.py import TelaJogador
+from jogador import Jogador
+from telaJogador import TelaJogador
 from controladorPrincipal import ControladorPrincipal
 
 
-class ControladorJogador():
+class ControladorJogador:
     def __init__(self, controlador : ControladorPrincipal):
         self.__tela = TelaJogador()
         self.__jogadores = []
         if isinstance(controlador, ControladorPrincipal):
             self.__controlador_principal = controlador
-
 
 
     #tela pede o nome, controlador adiciona o nome na lista.
