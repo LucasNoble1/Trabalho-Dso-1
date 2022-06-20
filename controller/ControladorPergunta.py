@@ -1,9 +1,10 @@
 from pergunta import Pergunta
 from telaPergunta import TelaPergunta
+from controladorPrincipal import ControladorPrincipal
 
 class Controlador_Pergunta:
-  # fazer aqui tratamento dos dados, caso os parametros sejam diferentes do esperado
-  def __init__(self, TelaPergunta):
+  
+  def __init__(self, ControladorPrincipal, telaPergunta, pergunta, resposta, alternativas, temas):
     
     super().__init__(pergunta, resposta, alternativas, temas)
     self.__telaPergunta = TelaPergunta
@@ -12,74 +13,82 @@ class Controlador_Pergunta:
     self.__temas = []
     self.__alternativas = []
     self.__resposta = resposta
+    self.__controladorPrincipal = ControladorPrincipal
 
-  @property
-  def incluir_Pergunta(self):
-    #verificar se a pta ja n existe (colocar os ids em um array?)
+  
+  def incluir_Pergunta(self, id, pergunta, resposta, alternativas, temas):
 
     dados_pergunta = self.__telaPergunta.cadastrar_pergunta()
     #tal qual o controlador_livros do pequeno exemplo mvc
-    pergunta = Pergunta(dados_livro["id"], dados_livro["pergunta"], dados_livro["resposta"], dados_livro["alternativas"], dados_livro["tema"])
-    self.__perguntas.append(pergunta)
 
+    if (id.pergunta() not in self.__perguntas):
+      
+      pergunta = Pergunta(dados_pergunta["id"], dados_pergunta["pergunta"], dados_pergunta["resposta"], dados_pergunta["alternativas"], dados_pergunta["tema"])
+      self.__perguntas.append(pergunta)
     #caso pergunta n exista ainda
-    if id.pergunta() not in perguntas:
-      perguntas.append(id, pergunta, resposta, alternativas, temas) #arrumar isso aq, duplicado(linha 23)
     else:
-      print("Pergunta já foi adicionada!")
-      #Colocar uma exceção nessa parte
+      self.__telaAbstract.mostrar_mensagem("ATENCAO: Pergunta ja existe")
+      
 
 
 
 
-  @property
+  
   def excluir_Pergunta(self):
-    # verificar se a pta existe no array de perguntas
-    if id.pergunta() not in perguntas:
-      pergunta.remove(id, pergunta, resposta, alternativas, temas)
+    self.mostrar_pergunta()
+    id_pergunta = self.__telaPergunta.seleciona_pergunta()
+    pergunta = self.pega_pergunta_por_id(id_pergunta)
 
+    if(pergunta is not None):
+      self.__perguntas.remove(pergunta)
+      self.lista_pergunta()
     else:
-      print("Pergunta não foi adicionada ainda, por isso não é possivel excluir")
+      self.__telaAbstract.mostrar_mensagem("ATENCAO: Pergunta não existente")
 
-  @property
+
+  def lista_pergunta(self):
+    for pergunta in self.__perguntas:
+      self.__telaPergunta.mostra_pergunta({"Pergunta": pergunta.pergunta, "codigo": pergunta.id, "tema": pergunta.tema, "resposta": pergunta.resposta, "alternativas": pergunta.alternativas})    
+
+  
   def editar_Pergunta(self):
     
     #perguntar pro user o que ele quer editar na pergunta
-    edicao = input()
-      
-    if input == id:
-      self.__id.pergunta = id
+    self.listaPerguntas()
+    codigo_Pergunta = self.__telaPergunta.seleciona_pergunta()
+    pergunta = self.mostra_pergunta_por_id(id)
 
-    elif input == pergunta:
-      self.__pergunta = pergunta
+    
 
-    elif input == resposta:
-      self.__pergunta = pergunta
-
-    elif input == alternativas:
-      self.__alternativas.pergunta = alternativas
-
-    elif input == temas:
-      self.__temas.pergunta = temas
-
+    #id: int , pergunta: str, resposta: str , alternativas: [], tema: str
+    if(pergunta is not None):
+      novos_dados_pergunta = self.__telaPergunta.mostra_pergunta_por_id()
+      pergunta.id = novos_dados_pergunta["id"]
+      pergunta.id = novos_dados_pergunta["pergunta"]
+      pergunta.id = novos_dados_pergunta["resposta"]
+      pergunta.id = novos_dados_pergunta["alternativas"]
+      pergunta.id = novos_dados_pergunta["tema"]
+      self.mostrar_pergunta()
     else:
-      print("Opção inválida")
+      self.__telaAbstract.mostrar_mensagem("ATENCAO: Pergunta não existente")
 
   def retornar(self):
     self.__controladorPrincipal.abre_tela()
 
   def abre_tela(self):
-    lista_opcoes = {1: self.cadastrar_pergunta, 2: self.alterar_pergunta, 3: self.lista_perguntas, 4: self.excluir_perguntas, 0: self.retornar}  
+    lista_opcoes = {1: self.cadastrar_pergunta, 2: self.alterar_pergunta, 3: self.listar_perguntas, 4: self.excluir_perguntas, 0: self.retornar}  
 
 
   def listar_perguntas_por_tema(self, tema):
-    escolha_user = input()
-
-    ''''''''
+    for pergunta in self.__perguntas:
+      if(pergunta.tema == tema):
+        return pergunta
+    return None
     #percorre o array de temas
 
 
-
-    for t in temas:
-      if tema.pergunta() == t:
-        print("Essas são as perguntas desse tema: {}" .format(perguntas.t))
+  def pega_pergunta_por_id(self, id: int):
+    for pergunta in self.__perguntas:
+      if(pergunta.id == id):
+        return pergunta
+    return None
