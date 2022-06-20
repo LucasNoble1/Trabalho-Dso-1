@@ -6,6 +6,19 @@ class Jogador():
         self.__acertos = 0
         self.__erros = 0
 
+    #calcula os pontos
+    def pontos(self):
+        pontos = self.__acertos - self.__erros
+        return pontos
+
+    #aumento os acertos
+    def acertou(self):
+        self.__acertos =+ 1
+
+    #diminui os erros
+    def errou(self):
+        self.__erros =- 1
+
     @property
     def nome(self):
         return self.__nome
@@ -22,12 +35,3 @@ class Jogador():
     def nome(self, nome):
         self.__nome = nome
 
-    def pontos(self):
-        pontos = self.__acertos - self.__erros
-        return pontos
-
-    def acertou(self):
-        self.__acertos =+ 1
-
-    def errou(self):
-        self.__erros =- 1
