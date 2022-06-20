@@ -1,18 +1,18 @@
-from jogador import Jogador
-from telaJogador import TelaJogador
-from controladorPrincipal import ControladorPrincipal
+from model.jogador import Jogador
+from view.telaJogador import TelaJogador
+from controller.controladorPrincipal import ControladorPrincipal
 
 
 class ControladorJogador:
     def __init__(self, controlador : ControladorPrincipal):
-        self.__tela = TelaJogador()
+        self.__tela = TelaJogador(self)
         self.__jogadores = []
         if isinstance(controlador, ControladorPrincipal):
             self.__controlador_principal = controlador
 
 
-    #tela pede o nome, controlador adiciona o nome na lista.
-      def incluir_jogador(self):
+    #tela pede o nome, controlador adiciona o nome na lista
+    def incluir_jogador(self):
         x = 1
         while x == 1:
             x = 2
@@ -21,11 +21,13 @@ class ControladorJogador:
                 if jogador.nome == nome:
                     self.__tela.mostrar_mensagem("Jogador ja existe!!!!!")
                     x = 1
-        self.__jogadores.append(Jogador(nome))
+                else:
+                    self.__jogadores.append(Jogador(nome))
         self.__tela.mostrar_mensagem("jogador adicionado com sucesso!")
-        self.__tela.mostrar_opcoes()
 
-   #tela mostra jogadores, pede o nome, controlador remove da lista
+
+    #tela mostra jogadores, pede o nome, controlador remove da lista
+    #esta utilidade foi removida do trabalho
     def excluir_jogador(self):
         x = 1
         while x == 1:
@@ -41,6 +43,7 @@ class ControladorJogador:
 
 
     #tela mostra jogadores, pede o nome , pede o novo nome , altera o nome
+    #esta utilidade foi removida do trabalho
     def alterar_jogador(self):
         x = 1
         while x == 1:
@@ -61,18 +64,22 @@ class ControladorJogador:
 
 
 
-    #faz a tela mostrar todos os jogadores, ja convertendo para string :)
+    #faz a tela mostrar todos os jogadores, ja convertendo para seus nomes e pontos para strings e ints.
     def listar_jogadores(self):
         for jogador in self.__jogadores:
-            nome = jogador.nome()
-            self.__tela.mostrar_jogador(nome)
+            nome = str(jogador.nome())
+            pontos = int(jogador.pontos())
+            self.__tela.mostrar_jogador(nome,pontos)
+
+
 
     #volta para a tela principal
     def retorna(self):
-        self.__controlador_principal.abre_tela()
+        self.__controlador_principal.tela_principal()
 
 
     #abre a tela de opcoes do jogador
+    #essa opçao foi removida do trabalho
     def abre_tela(self):
         lista_opcoes = {1: self.incluir_jogador, 2: self.alterar_jogador, 3: self.pontuacao_jogadores, 4: self.excluir_jogador,
                         0: self.retorna}
@@ -81,16 +88,17 @@ class ControladorJogador:
         while continua:
             lista_opcoes[self.__tela.tela_opcoes()]()
 
-    def pontuacao_jogador(self,jogador):
-        pass
-
+    #nao lembro pq eu fiz essa função :)
     def pontuacao_jogadores(self):
         if self.__jogadores == []:
             self.__tela.mostrar_mensagem("Ainda não existem jogadores cadastrados!")
             self.__tela.mostrar_mensagem("Adicione um jogador para utilizar essa função!")
         else:
             self.listar_jogadores()
-            self.__tela.mostrar_opcoes()
+
+    @property
+    def jogadores(self):
+        return self.__jogadores
 
 
 
