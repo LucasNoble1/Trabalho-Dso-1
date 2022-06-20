@@ -1,5 +1,5 @@
-from telaAbstract import Tela
-from controladorJogo import ControladorJogo
+from view.telaAbstract import Tela
+from controller.controladorJogo import ControladorJogo
 
 class TelaJogo(Tela):
     def __init__(self, controlador):
@@ -7,4 +7,5 @@ class TelaJogo(Tela):
         if isinstance(controlador, ControladorJogo):
             self.__controlador = controlador
 
-    def
+    #só usamos os metodos abstratos nela
+    #GENIAL NE? nota 10

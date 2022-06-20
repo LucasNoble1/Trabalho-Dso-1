@@ -1,23 +1,28 @@
-from telaAbstract import Tela
-from controladorJogador import ControladorJogador
+from view.telaAbstract import Tela
+from controller.controladorJogador import ControladorJogador
 
 class TelaJogador(Tela):
     def __init__(self, controlador: ControladorJogador ):
-        super()__init__()
+        super().__init__()
         if isinstance(controlador, ControladorJogador):
             self.__controlador = controlador
 
-
+    #armazena o nome do jogador
     def nome_jogador(self , mensagem : str ):
         print("==========" , mensagem , "==============")
         nome = input("Digite o nome do jogador:")
         print("==========================================")
         return nome
 
+    #mostra nome e pontuação do jogador
+    def mostrar_jogador(self, nome, pontos):
+        print("Nome do Jogador:", nome)
+        print("Pontucão do jogador:", pontos)
+        print("\n")
 
-    def mostrar_jogador(self, nome):
-        print("Nome do Jogador:", nome )
 
+    #opcoes do jogador
+    #essa função foi cortada do trabalho
     def mostrar_opcoes(self):
         print("-----Opçoes-----")
         print("\n")
