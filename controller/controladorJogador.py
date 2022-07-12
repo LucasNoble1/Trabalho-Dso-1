@@ -1,14 +1,14 @@
 from model.jogador import Jogador
 from view.telaJogador import TelaJogador
-from controller.controladorPrincipal import ControladorPrincipal
+#from controller.controladorPrincipal import ControladorPrincipal
 
 
 class ControladorJogador:
-    def __init__(self, controlador : ControladorPrincipal):
+    def __init__(self, controlador):
         self.__tela = TelaJogador(self)
         self.__jogadores = []
-        if isinstance(controlador, ControladorPrincipal):
-            self.__controlador_principal = controlador
+        #if isinstance(controlador, ControladorPrincipal):
+        self.__controlador_principal = controlador
 
 
     #tela pede o nome, controlador adiciona o nome na lista
