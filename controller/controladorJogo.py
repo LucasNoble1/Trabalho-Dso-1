@@ -1,13 +1,13 @@
 from model.jogo import Jogo
-from controller.controladorPrincipal import ControladorPrincipal
+#from controller.controladorPrincipal import ControladorPrincipal
 from view.telaJogo import TelaJogo
 
 class ControladorJogo:
-    def __init__(self, controlador : ControladorPrincipal):
-        if isinstance(controlador, ControladorPrincipal):
-            self.__controlador_principal = controlador
-            self.__tela_jogo = TelaJogo(self)
-            self.__jogo = None
+    def __init__(self, controlador ):
+        #if isinstance(controlador, ControladorPrincipal):
+        self.__controlador_principal = controlador
+        self.__tela_jogo = TelaJogo(self)
+        self.__jogo = None
 
     #chama a proxima função
     def inicia(self):
@@ -32,15 +32,17 @@ class ControladorJogo:
         x = qtd_jogadores
         while x != 0:
             self.__controlador_principal.controlador_jogador.incluir_jogador()
-            x =- 1
+            x = x - 1
+        self.passo_dois()
 
+    def passo_dois(self):
         self.__tela_jogo.mostrar_mensagem("==========================")
         self.__tela_jogo.mostrar_mensagem("Passo 2 : Escolha a quantidade de turnos")
         self.__tela_jogo.mostrar_mensagem(" 1 --Iniciar um jogo com 3 turnos")
         self.__tela_jogo.mostrar_mensagem(" 2 --Iniciar um Jogo com 5 turnos")
         self.__tela_jogo.mostrar_mensagem(" 3 --Iniciar um jogo com 7 turnos")
         self.__tela_jogo.mostrar_mensagem("\n")
-        qtd_turnos = self.__tela_jogo.le_num_inteiro("Digite o numero da opção desejada", [1, 2, 3])
+        qtd_turnos = self.__tela_jogo.le_num_inteiro("Digite o numero da opção desejada:", [1, 2, 3])
         if qtd_turnos == 0:
             self.passo_um()
         else:
