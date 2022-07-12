@@ -8,8 +8,7 @@ class TelaJogo(Tela):
         #if isinstance(controlador):
         self.__controlador = controlador
         self.__window = None
-        self.tela_passo_um()
-        self.init_components()
+        
 
     def tela_passo_um(self):
         self.init_components()
