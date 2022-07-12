@@ -1,11 +1,11 @@
 from view.telaAbstract import Tela
-from controller.controladorJogador import ControladorJogador
+#from controller.controladorJogador import ControladorJogador
 
 class TelaJogador(Tela):
-    def __init__(self, controlador: ControladorJogador ):
+    def __init__(self, controlador):
         super().__init__()
-        if isinstance(controlador, ControladorJogador):
-            self.__controlador = controlador
+        #if isinstance(controlador, ControladorJogador):
+        self.__controlador = controlador
 
     #armazena o nome do jogador
     def nome_jogador(self , mensagem : str ):
