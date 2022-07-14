@@ -1,15 +1,19 @@
 
 
-class Jogo():
-    def __init__(self, qtd_jogadores: str, qtd_turnos):
+class Jogo:
+    def __init__(self, numero_jogadores: str, qtd_turnos):
         self.__jogadores = []
         self.__perguntas = []
-        self.__qtd_jogadores = qtd_jogadores
+        self.__numero_jogadores = numero_jogadores
         self.__qtd_turnos = qtd_turnos
-        self.__jogador_da_vez = self.__jogadores[0]
+        self.__jogador_da_vez = None
 
-    @property
+
+
+
     def jogador_da_vez(self):
+        jogador = self.__jogadores[0]
+        self.__jogador_da_vez = jogador
         return self.__jogador_da_vez
 
     #alterao para o proximo jogador
@@ -34,17 +38,17 @@ class Jogo():
         return self.__perguntas
 
     @property
-    def qtd_jogares(self):
-        return self.__qtd_jogadores
-
+    def numero_jogares(self):
+        return self.__numero_jogadores
 
     @property
     def qtd_turnos(self):
         return self.__qtd_turnos
 
-    @qtd_jogadores.setter
-    def qtd_jogadores(self, qtd_jogadores : int):
-        self.__qtd_jogadores = qtd_jogadores
+
+    def alterar_numero_jogadores(self, numero_jogadores : int):
+        self.__numero_jogadores = numero_jogadores
+
 
 
 
