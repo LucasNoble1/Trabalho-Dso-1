@@ -1,14 +1,12 @@
 import random
-from model.perguntas2 import Perguntas2
-from controller.controladorPrincipal import ControladorPrincipal
-from view.telaPerguntas2 import TelaPerguntas2
+from model.pergunta import Pergunta
+from view.telaPergunta import TelaPergunta
 
-class ControladorPerguntas2:
+class ControladorPergunta:
     def __init__(self, controlador):
-        if isinstance(controlador, ControladorPrincipal):
-            self.__controlador_principal = ControladorPrincipal
+        self.__controlador_principal = controlador
         self.__perguntas = []
-        self.__tela_pergunta = TelaPerguntas2(self)
+        self.__tela_pergunta = TelaPergunta(self)
 
 
     #revela as perguntas, armazena as respostas
@@ -62,9 +60,11 @@ class ControladorPerguntas2:
 
 
 
-
+    @property
+    def perguntas(self):
+        return self.__perguntas
     #metodos que a alicia implementou no codigo dela
-    def adicionar_pergunta(self):
+    def adicionar_pergunta(self, pergunta:Pergunta):
         pass
 
     def editar_pergunta(self):
