@@ -13,14 +13,13 @@ class Tela(ABC):
             valor_lido = input(mensagem)
             try:
                 inteiro = int(valor_lido)
-                if inteiros_validos and inteiro in inteiros_validos:
-                    return inteiro
+                if inteiros_validos and inteiro not in inteiros_validos:
+                    raise ValueError
+                return inteiro
             except ValueError:
                 print("Valor incorreto: digite um numero valido")
                 print("Valores validos:", inteiros_validos)
 
     #metodo facilitador para mostrar mensagens pequenas.
-    def mostrar_mensagem(self, mensagem: str = ""):
-        print(mensagem)
-
-
+    def mostrar_mensagem(self, mensagem: str = "",mensagem2: str = ""):
+        print(mensagem + mensagem2)
