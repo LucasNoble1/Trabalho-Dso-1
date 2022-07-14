@@ -1,18 +1,15 @@
 from controller.controladorJogo import ControladorJogo
 from controller.controladorJogador import ControladorJogador
-from controller.controlador_pergunta import Controlador_Pergunta
-from controller.controladorPergunta2 import ControladorPergunta2
+from controller.controladorPergunta import ControladorPergunta
 from view.telaPrincipal import TelaPrincipal
-from view.telaPergunta import TelaPergunta
+
 
 class ControladorPrincipal:
     def __init__(self):
         self.__controlador_jogo = ControladorJogo(self)
         self.__controlador_jogador =ControladorJogador(self)
-        self.__controlador_pergunta = Controlador_Pergunta(self)
-        self.__controlador_pergunta2 = ControladorPergunta2(self)
+        self.__controlador_pergunta = ControladorPergunta(self)
         self.__tela_principal = TelaPrincipal(self)
-        self.__tela_pergunta = TelaPergunta(self)
 
     @property
     def controlador_jogo(self):
@@ -23,11 +20,6 @@ class ControladorPrincipal:
     @property
     def controlador_pergunta(self):
         return self.__controlador_pergunta
-
-    @property
-    def controlador_pergunta2(self):
-        return self.__controlador_pergunta2
-
     @property
     def tela_principal(self):
         return self.__tela_principal
@@ -42,7 +34,7 @@ class ControladorPrincipal:
 
     #inicia o controladorjogo
     def iniciar_jogo(self):
-        self.__controlador_jogo.inicia()
+        self.__controlador_jogo.passo_um()
     #inicia as rodadas de perguntas
     def rodada_jogo(self):
         self.__controlador_pergunta.mostrar_pergunta()
