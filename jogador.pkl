@@ -1,0 +1,8 @@
+import pickle
+jogadores = {}
+arq_jogadores_escrita = open('jogador.pkl' , 'wb')
+arq_jogadores_leitura = open('jogador.pkl' , 'rb)
+
+pickle.dump(jogadores, arq_jogadores)
+
+jogadores = pickle.load(jogadores, arq_jogadores_leitura)
