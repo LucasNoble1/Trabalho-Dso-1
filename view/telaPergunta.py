@@ -21,8 +21,9 @@ class TelaPergunta(Tela):
         return opcao
 
     #metodo que mostra a pergunta e suas alternativas durante o jogo
-    def mostrar_pergunta(self, pergunta, alt1, alt2, alt3):
+    def mostrar_pergunta(self, pergunta, alt1, alt2, alt3, nome):
         print("=============================")
+        print("jogador da vez: ",nome)
         print("          PERGUNTA:         ")
         print(">", pergunta, "<")
         print("=============================")
@@ -63,12 +64,14 @@ class TelaPergunta(Tela):
         print("A Pergunta:" + pergunta)
         print("FOI ADICIONADA COM SUCESSO!!!")
         self.__controlador.abre_tela()
-    def mostrar_perguntas(self):
+
+    def mostrar_todas_perguntas(self, codigo, pergunta):
+        print(codigo , "====>" , pergunta)
+
+    def pergunta_removida(self, codigo, pergunta):
         pass
 
-    
-
-
+    '''
         # tela pergunta interf grafica
     def tela_pergunta_teste(self):
         self.init_components()
@@ -85,7 +88,7 @@ class TelaPergunta(Tela):
             opcao = 0
         self.close()
         return opcao
-
+     
     # metodo para iniciar os componentes da interface grafica da tela de Pergunta
     def init_components(self):
         sg.ChangeLookAndFeel('Reddit')
@@ -97,4 +100,6 @@ class TelaPergunta(Tela):
             [sg.Radio('3 - Editar pergunta', "RD1", key='3')],
             [sg.Cancel('0 - voltar')]
             ]
+        self.__window = sg.Window('Perguntas').Layout(layout)
+    '''
         self.__window = sg.Window('Perguntas').Layout(layout)
