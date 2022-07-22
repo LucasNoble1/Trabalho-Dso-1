@@ -1,52 +1,42 @@
-class Pergunta():
-  def __init__(self,id: int , pergunta: str, resposta: str , alternativas: [], tema: str):
-        self.__id = id
+class Pergunta:
+    def __init__(self, pergunta: str ,resposta : str , alternativa1 :str , alternativa2: str, codigo: str):
         self.__pergunta = pergunta
         self.__resposta = resposta
-        self.__alternativas = []
-        self.__tema = tema
-
-  #getters
-
-  @property
-  def id(self):
-    return self.__id
-
-  @property
-  def pergunta(self):
-    return self.__pergunta
-
-  @property
-  def resposta(self):
-    return self.__resposta
-
-  @property
-  def alternativas(self):
-    return self.__alternativas
-
-  @property
-  def tema(self):
-    return self.__tema 
+        self.__alternativa1 = alternativa1
+        self.__alternativa2 = alternativa2
+        self.__codigo = codigo
 
 
-  #setters
-  @id.setter
-  def id(self, id: int):
-    self.__id = id 
+    @property
+    def pergunta(self):
+        return self.__pergunta
 
-  @pergunta.setter
-  def pergunta(self, pergunta: str):
-    self.__pergunta = pergunta
+    @pergunta.setter
+    def pergunta(self, pergunta):
+        if isinstance(pergunta, str):
+            self.__pergunta = pergunta
+    @property
+    def resposta(self):
+        return self.__resposta
 
-  @resposta.setter
-  def resposta(self, resposta: str):
-    self.__pergunta = resposta
+    @resposta.setter
+    def resposta(self, resposta):
+        self.__resposta = resposta
 
-  @alternativas.setter
-  def alternativas(self, alternativas: []):
-    self.__alternativas = alternativas
+    @property
+    def alternativa1(self):
+        return self.__alternativa1
 
-  @tema.setter
-  def tema(self, tema: str):
-    self.__tema = tema  
-  
+    @alternativa1.setter
+    def alternativa1(self, alternativa1):
+        self.__alternativa1 = alternativa1
+    @property
+    def alternativa2(self):
+        return self.__alternativa2
+
+    @alternativa2.setter
+    def alternativa2(self,alternativa2):
+        self.__alternativa2 = alternativa2
+    @property
+    def codigo(self):
+        return self.__codigo
