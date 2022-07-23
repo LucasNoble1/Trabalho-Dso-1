@@ -2,12 +2,13 @@ from controller.controladorJogo import ControladorJogo
 from controller.controladorJogador import ControladorJogador
 from controller.controladorPergunta import ControladorPergunta
 from view.telaPrincipal import TelaPrincipal
+from model.Pergunta import Pergunta
 
 
 class ControladorPrincipal:
     def __init__(self):
         self.__controlador_jogo = ControladorJogo(self)
-        self.__controlador_jogador =ControladorJogador(self)
+        self.__controlador_jogador = ControladorJogador(self)
         self.__controlador_pergunta = ControladorPergunta(self)
         self.__tela_principal = TelaPrincipal(self)
 
