@@ -6,7 +6,7 @@ class Jogo:
         self.__perguntas = []
         self.__numero_jogadores = numero_jogadores
         self.__qtd_turnos = qtd_turnos
-
+        self.__codigo_jogo = codigo_jogo
 
     @property
     def jogadores(self):
@@ -23,6 +23,10 @@ class Jogo:
     @property
     def qtd_turnos(self):
         return self.__qtd_turnos
+    
+    @property
+    def codigo_jogo(self):
+        return self.__codigo_jogo
 
     def um_jogador(self):
         j1 = self.__jogadores[0]
