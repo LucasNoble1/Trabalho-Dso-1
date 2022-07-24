@@ -1,13 +1,3 @@
-from view.telaAbstract import Tela
-import PySimpleGUI as sg
-
-class TelaPergunta(Tela):
-    def __init__(self, controlador):
-        super().__init__()
-        self.__controlador = controlador
-        self.__window = None
-
-
     def tela_opcoes(self):
         print("\n")
         print("-----Opçoes-----")
@@ -66,13 +56,69 @@ class TelaPergunta(Tela):
         self.__controlador.abre_tela()
 
     def mostrar_todas_perguntas(self, codigo, pergunta):
-        print(codigo , "====>" , pergunta)
+        print(codigo, "====>" , pergunta)
 
-    def pergunta_removida(self, codigo, pergunta):
-        pass
+    def editar_pergunta(self, p, r, a1, a2):
+        pergunta = p
+        resposta = r
+        alternativa1 = a1
+        alternativa2 = a2
+        print("==Editar uma pergunta==")
+        print(" 1 => PERGUNTA: ", pergunta)
+        print(" 2 => RESPOSTA: ", resposta)
+        print(" 3 => ALTERNATIVA 1: ", alternativa1)
+        print(" 4 => ALTERNATIVA 2: ", alternativa2)
+        print(" 0 => VOLTAR")
+        opcao = self.le_num_inteiro("Selecione a opção que deseja alterar:", [0, 1, 2, 3, 4])
+        if opcao == 0:
+            return "0", 0
+        elif opcao == 1:
+            print("PERGUNTA ANTIGA: ", pergunta)
+            pergunta_nova = str(input("Digite a nova pergunta:"))
+            print("Suas alteracoes foram salvas com sucesso!!!")
+            print("=========================================")
+            return pergunta_nova , opcao
+        elif opcao == 2:
+            print("RESPOSTA ANTIGA: ", resposta)
+            resposta = str(input("Digite a nova resposta:"))
+            print("Suas alteracoes foram salvas com sucesso!!!")
+            print("=========================================")
+            return resposta, opcao
+        elif opcao == 3:
+            print("ALTERNATIVA ANTIGA: ", alternativa1)
+            resposta = str(input("Digite a nova alternativa:"))
+            print("Suas alteracoes foram salvas com sucesso!!!")
+            print("=========================================")
+            return resposta, opcao
+        elif opcao == 4:
+            print("ALTERNATIVA ANTIGA: ", alternativa2)
+            resposta = str(input("Digite a nova alternativa:"))
+            print("Suas alteracoes foram salvas com sucesso!!!")
+            print("=========================================")
+            return resposta, opcao
 
-    '''
-        # tela pergunta interf grafica
+
+    def pedir_pergunta(self):
+        print("===============================================")
+        print('\n')
+        codigo = input("Digite o codigo da pergunta:")
+        return codigo
+
+    def pergunta_removida(self, pergunta):
+        print("A Pergunta:" + pergunta)
+        print("FOI REMOVIDA COM SUCESSO!!!")
+        self.__controlador.abre_tela()
+
+    def pergunta_inexistente(self, codigo):
+        codigo = str(codigo)
+        print("\n")
+        print("ERRO")
+        print("O codigo ", codigo , "nao coresponde a nenhuma pergunta!")
+        print("Nenhuma pergunta foi excluida, ou alterada!")
+        self.tela_opcoes()
+
+    
+     # tela pergunta interf grafica
     def tela_pergunta_teste(self):
         self.init_components()
         button, values = self.__window.Read()
@@ -89,7 +135,7 @@ class TelaPergunta(Tela):
         self.close()
         return opcao
      
-    # metodo para iniciar os componentes da interface grafica da tela de Pergunta
+    #metodo para iniciar os componentes da interface grafica da tela de Pergunta
     def init_components(self):
         sg.ChangeLookAndFeel('Reddit')
         layout = [
@@ -101,5 +147,5 @@ class TelaPergunta(Tela):
             [sg.Cancel('0 - voltar')]
             ]
         self.__window = sg.Window('Perguntas').Layout(layout)
-    '''
+    
         self.__window = sg.Window('Perguntas').Layout(layout)
