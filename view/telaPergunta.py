@@ -1,3 +1,13 @@
+from view.telaAbstract import Tela
+import PySimpleGUI as sg
+
+class TelaPergunta(Tela):
+    def __init__(self, controlador):
+        super().__init__()
+        self.__controlador = controlador
+        self.__window = None
+
+
     def tela_opcoes(self):
         print("\n")
         print("-----Opçoes-----")
@@ -117,8 +127,8 @@
         print("Nenhuma pergunta foi excluida, ou alterada!")
         self.tela_opcoes()
 
-    
-     # tela pergunta interf grafica
+ 
+        # tela pergunta interf grafica
     def tela_pergunta_teste(self):
         self.init_components()
         button, values = self.__window.Read()
@@ -135,7 +145,7 @@
         self.close()
         return opcao
      
-    #metodo para iniciar os componentes da interface grafica da tela de Pergunta
+    # metodo para iniciar os componentes da interface grafica da tela de Pergunta
     def init_components(self):
         sg.ChangeLookAndFeel('Reddit')
         layout = [
@@ -146,6 +156,4 @@
             [sg.Radio('3 - Editar pergunta', "RD1", key='3')],
             [sg.Cancel('0 - voltar')]
             ]
-        self.__window = sg.Window('Perguntas').Layout(layout)
-    
         self.__window = sg.Window('Perguntas').Layout(layout)
