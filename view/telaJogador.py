@@ -1,40 +1,70 @@
 from view.telaAbstract import Tela
-#from controller.controladorJogador import ControladorJogador
-import PySimpleGUI as sg
 
 class TelaJogador(Tela):
     def __init__(self, controlador):
         super().__init__()
-        #if isinstance(controlador, ControladorJogador):
         self.__controlador = controlador
 
-    #armazena o nome do jogador
-    def nome_jogador(self , mensagem : str ):
-        print("==========" , mensagem , "==============")
-        nome = input("Digite o nome do jogador:")
-        print("==========================================")
+    def selecionar_jogador(self):
+        cpf = input("digite o cpf de um jogador:")
+        return cpf
+    def novo_nome(self):
+        nome = input("Digite o novo nome do jogador:")
         return nome
 
-    #mostra nome e pontuação do jogador
-    def mostrar_jogador(self, nome, pontos):
-        print("Nome do Jogador:", nome)
-        print("Pontucão do jogador:", pontos)
-        print("\n")
+    #armazena o nome do jogador
+    def novo_jogador(self , mensagem : str ):
+        while True:
+            print("==========" , mensagem , "==============")
+            nome = input("Digite o nome do jogador:")
+            cpf = input("Digite seu cpf:")
+            if nome == "" or cpf == "":
+                print("AVISO: NOME e CPF não podem ser deixados em branco")
+            else:
+                return nome , cpf
 
+    #mostra nome e pontuação do jogador
+    def mostrar_jogador(self, nome, pontos, cpf ):
+        print("cpf: ", cpf , " ===>Jogador:", nome)
+        print("Pontucão do jogador:", pontos)
+        print("-------------------------")
+
+    def ranking(self, posicao, nome, acertos, erros, pontos, jogos, media):
+        print("===== TOP ", posicao, " =====")
+        print("=> Nome: ", nome)
+        print("=> Total de acertos: ", acertos)
+        print("=> total de erros: ", erros)
+        print("=> Total de pontos: ", pontos)
+        print("=> Total de jogos: ", jogos)
+        print("=> Media de pontos por partida: ", media)
 
     #opcoes do jogador
     #essa função foi cortada do trabalho
-    def mostrar_opcoes(self):
+    def tela_opcoes(self):
         print("-----Opçoes-----")
         print("\n")
         print("1 - Cadastrar Jogador")
-        print("2 - Editar um Jogador")
+        print("2 - Editar  o nome de um Jogador")
         print("3 - Excluir um jogador")
-        print("4 - Pontuçao dos jogadores")
+        print("4 - Ranking dos jogadores ")
         print("0 - voltar")
         print("\n")
         opcao = self.le_num_inteiro("Selecione uma opção:", [1, 2, 3, 4, 0])
         return opcao
+
+    def aviso_jogador_removido(self, nome):
+        print('o jogador :', nome ,'foi removido do sistema')
+
+    def aviso_jogador_nao_encontrado(self,cpf):
+        print('o cpf: ', cpf ,'não corresponde a nenhum jogador')
+        print('selecione um cpf valido')
+
+    def aviso_jogador_duplicado(self):
+        print("Impossivel adicionar jogador")
+        print("Cpf ou Nome indisponiveis")
+    def aviso_jogador_alterado(self):
+        print("O nome do jogador foi alterado com sucesso")
+       
 
     def tela_pergunta(self):
         self.init_components()
