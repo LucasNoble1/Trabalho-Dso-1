@@ -1,3 +1,5 @@
+
+
 class Pergunta:
     def __init__(self, pergunta: str ,resposta : str , alternativa1 :str , alternativa2: str, codigo: str):
         self.__pergunta = pergunta
@@ -36,7 +38,8 @@ class Pergunta:
 
     @alternativa2.setter
     def alternativa2(self,alternativa2):
-        self.__alternativa2 = alternativa2
+        if isinstance(alternativa2 , str):
+            self.__alternativa2 = alternativa2
     @property
     def codigo(self):
         return self.__codigo
