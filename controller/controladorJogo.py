@@ -1,84 +1,118 @@
+import random
 from model.jogo import Jogo
 from view.telaJogo import TelaJogo
+from DAOs.jogoDao import JogoDAO
+
 
 class ControladorJogo:
-    def __init__(self, controlador ):
+    def __init__(self, controlador):
         self.__controlador_principal = controlador
-        self.__tela_jogo = TelaJogo(self)
+        self.__tela = TelaJogo(self)
         self.__jogo = None
+        self.__jogo_dao = JogoDAO()
 
-    #chama a proxima função
-    def inicia(self):
-        self.passo_um()
+
+
+
 
     #salva a quantidade de jogadores
     #inclui essa quantidade de jogadores no controladorJogadores
     #salva a quantidade de turnos
     #istancia um jogo usando a qtd_turnos e qtd_jogadores
     #chama a função inicia_jogo
-    def passo_um(self):
-        self.__tela_jogo.mostrar_mensagem("============================")
-        self.__tela_jogo.mostrar_mensagem("Passo 1: Escolha a quantidade de jogadores")
-        self.__tela_jogo.mostrar_mensagem("1 -- MODO SOLO")
-        self.__tela_jogo.mostrar_mensagem("2 -- MODO BORA X1 ")
-        self.__tela_jogo.mostrar_mensagem("3 -- MODO CADA UM POR SI")
-        self.__tela_jogo.mostrar_mensagem("0 - VOLTAR")
-        self.__tela_jogo.mostrar_mensagem("\n")
-        qtd_jogadores = self.__tela_jogo.le_num_inteiro("numero de jogadores:", [1, 2, 3, 0])
-        if qtd_jogadores == 0:
-            self.__controlador_principal.tela_principal.tela_inicial()
-        else:
-            x = qtd_jogadores
-            while x != 0:
-                self.__controlador_principal.controlador_jogador.incluir_jogador()
-                x = x - 1
-            self.passo_dois(qtd_jogadores)
-
-
-    def passo_dois(self,qtd_jogadores):
-        self.__tela_jogo.mostrar_mensagem("==========================")
-        self.__tela_jogo.mostrar_mensagem("Passo 2 : Escolha a quantidade de turnos")
-        self.__tela_jogo.mostrar_mensagem(" 1 --Iniciar um jogo com 3 turnos")
-        self.__tela_jogo.mostrar_mensagem(" 2 --Iniciar um Jogo com 5 turnos")
-        self.__tela_jogo.mostrar_mensagem(" 3 --Iniciar um jogo com 7 turnos")
-        self.__tela_jogo.mostrar_mensagem(" 0 --Voltar(isso deletara os jogadores ja cadastrados) ")
-        self.__tela_jogo.mostrar_mensagem("\n")
-        qtd_turnos = self.__tela_jogo.le_num_inteiro("Digite o numero da opção desejada", [1, 2, 3, 0])
+    def inicia(self):
+        num_jogadores  = self.__tela.tela_passo_um()
+        if num_jogadores == 0:
+            self.__controlador_principal.inicializa_sistema()
+        qtd_turnos = self.__tela.tela_passo_dois()
         if qtd_turnos == 0:
-            self.__controlador_principal.controlador_jogador.zerar_jogadores()
-            self.passo_um()
+            self.__controlador_principal.inicializa_sistema()
+        self.__jogo = Jogo(num_jogadores, qtd_turnos)
+
+        #inclui jogadores
+        x = num_jogadores
+        teste = len(self.__controlador_principal.controlador_jogador.jogador_dao.get_all())
+        if teste == 0:
+            while x != 0:
+                jogador = self.__controlador_principal.controlador_jogador.incluir_jogador()
+                self.__jogo.jogadores.append(jogador)
+                x = x - 1
         else:
-            self.__jogo = Jogo(qtd_jogadores, qtd_turnos)
-            self.passo_tres()
+            while x != 0:
+                escolha = self.__tela.selecao_jogadores()
+                if escolha == 1:
+                    jogador = self.__controlador_principal.controlador_jogador.incluir_jogador()
+                    self.__jogo.jogadores.append(jogador)
+                else:
+                    y = 0
+                    while y == 0:
+                        y = 1
+                        self.__controlador_principal.controlador_jogador.listar_jogadores()
+                        cpf = self.__controlador_principal.controlador_jogador.tela.selecionar_jogador()
+                        jogador = self.__controlador_principal.controlador_jogador.jogador_dao.get(cpf)
+                        self.__jogo.jogadores.append(jogador)
 
-    #adiciona os jogadores do controladorJogadores na lisata do jogo
-    #adiciona as perguntas do controladorPerguntas na lista do  jogo
-    #inicia o jogo
+                        if jogador == None:
+                            y = 0
+                        elif y == 0:
+                            self.__controlador_principal.controlador_jogador.tela.mostra_mensagem("o cpf não corresponde a nenhum jogador, tente novamente")
 
-    def passo_tres(self):
-        x = self.__controlador_principal.controlador_jogador.jogadores
-        for jogador in x:
-            self.__jogo.jogadores.append(jogador)
-            self.__controlador_principal.controlador_jogador.remove(jogador)
+                x = x - 1
 
-        qtd_turnos = self.__jogo.qtd_turnos
-        while qtd_turnos != 0:
-            for pergunta in self.__controlador_principal.controlador_pergunta.perguntas:
-                self.__jogo.perguntas.append(pergunta)
-            qtd_turnos = qtd_turnos - 1
-        self.iniciar_jogo()
+        #seta numero de perguntas
+        numero_jogadores = self.__jogo.numero_jogadores
+        numero_perguntas = self.__jogo.qtd_turnos * numero_jogadores
+
+        while numero_perguntas != 0:
+            lista = self.__controlador_principal.controlador_pergunta.pergunta_dao.get_all()
+            pergunta_aleatoria = random.choice(lista)
+            self.__jogo.perguntas.append(pergunta_aleatoria)
+            numero_perguntas = numero_perguntas - 1
+
+        if num_jogadores == 1:
+            self.iniciar_jogo_um_jogador()
+        elif num_jogadores == 2:
+            self.iniciar_jogo_dois_jogadores()
+        elif num_jogadores == 3:
+            self.iniciar_jogo_tres_jogadores()
 
 
-    def iniciar_jogo(self):
-        j = self.__jogo.jogadores
-        for i in j:
-            print(i)
-        jogador = str(j)
-        self.__tela_jogo.mostrar_mensagem("==========================")
-        self.__tela_jogo.mostrar_mensagem("VEZ DO JOGADOR:", jogador)
-        ok = self.__tela_jogo.le_num_inteiro("DIGITE 1 para iniciar:",[1])
-        if ok == 1:
-            self.__controlador_principal.controlador_pergunta.mostrar_pergunta_tela()
+    def iniciar_jogo_um_jogador(self):
+        j1 = self.__jogo.um_jogador()
+        nome = j1.nome
+        jogador_nome = str(nome)
+        self.__tela.vez_do_jogador(jogador_nome)
+        self.__controlador_principal.controlador_pergunta.mostrar_pergunta_tela(j1)
+        self.finaliza_jogo()
+
+    def iniciar_jogo_dois_jogadores(self):
+        j1, j2 = self.__jogo.dois_jogadores()
+        nome = j1.nome
+        jogador_nome = str(nome)
+        self.__tela.vez_do_jogador(jogador_nome)
+        self.__controlador_principal.controlador_pergunta.mostrar_pergunta_tela(j1)
+        nome = j2.nome
+        jogador_nome = str(nome)
+        self.__tela.vez_do_jogador(jogador_nome)
+        self.__controlador_principal.controlador_pergunta.mostrar_pergunta_tela(j2)
+        self.finaliza_jogo()
+
+    def iniciar_jogo_tres_jogadores(self):
+        j1, j2, j3 = self.__jogo.tres_jogadores()
+        nome = j1.nome
+        jogador_nome = str(nome)
+        self.__tela.vez_do_jogador(jogador_nome)
+        self.__controlador_principal.controlador_pergunta.mostrar_pergunta_tela(j1)
+        nome = j2.nome
+        jogador_nome = str(nome)
+        self.__tela.vez_do_jogador(jogador_nome)
+        self.__controlador_principal.controlador_pergunta.mostrar_pergunta_tela(j2)
+        nome = j3.nome
+        jogador_nome = str(nome)
+        self.__tela.vez_do_jogador(jogador_nome)
+        self.__controlador_principal.controlador_pergunta.mostrar_pergunta_tela(j3)
+        self.finaliza_jogo()
+
 
     #informa a qtd de turnos do jogo
     def qtd_turnos_jogo(self):
@@ -90,24 +124,26 @@ class ControladorJogo:
     #pergunta se o jogador quer voltar ao inicio.
     #falta implementar metodos para remover todos os dados ja armazenados para garantir um recomeço sem erros.
     def finaliza_jogo(self):
-        self.__tela_jogo.mostrar_mensagem("=========================")
-        self.__tela_jogo.mostrar_mensagem("> FIM DO JOGO <")
-        self.__tela_jogo.mostrar_mensagem(">Confira a pontuação<")
-        self.__controlador_principal.controlador_jogador.listar_jogadores()
-        opcao = self.__tela_jogo.le_num_inteiro("1 - digite 1 para voltar ao inicio",[1])
-        if opcao == 1:
-            self.__controlador_principal.inicializa_sistema()
+        self.__jogo_dao.add(self.__jogo)
+        self.__tela.mostra_mensagem(">>FIM DO JOGO<<")
+        dados_jogadores = []
+        for jogador in self.__jogo.jogadores:
+            nome = str(jogador.nome)
+            ac = str(jogador.acertos)
+            er = str(jogador.erros)
+            po = str(jogador.pontos())
+            jogador.atualizar_status()
+            dados_jogadores.append({"nome": nome, "acertos": ac,"erros": er,"pontos":po })
+        self.__tela.pontuacao_jogo(dados_jogadores)
+        self.__jogo = None
+        self.__controlador_principal.inicializa_sistema()
 
-    #instancia um jogador e aumenta em um seus acertos
-    def jogador_da_vez_pontua(self):
-        jogador = self.__jogo.jogador_da_vez
-        jogador.acertou()
-
-    #instancia um jogador e aumenta em um seus erros.
-    def jogador_da_vez_perde(self):
-        jogador = self.__jogo.jogador_da_vez
-        jogador.errou()
-
+    @property
+    def jogo(self):
+        return self.__jogo
+    @property
+    def tela(self):
+        return self.__tela
 
 
 
