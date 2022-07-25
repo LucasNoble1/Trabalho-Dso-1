@@ -7,17 +7,15 @@ class JogoDAO(DAO):
         super().__init__('jogo.pkl')
 
     def add(self, jogo: Jogo):
-        if((jogo is not None) and isinstance(jogo, Jogo) and isinstance(jogo.nome, int)):
-            super().add(jogo.nome, jogo)
+        if((jogo is not None) and isinstance(jogo, Jogo)):
+            super().add(jogo)
 
     def update(self, jogo: Jogo):
-        if((jogo is not None) and isinstance(jogo, Jogo) and isinstance(jogo.nome, int)):
-            super().update(jogo.id, jogo)
+        if((jogo is not None) and isinstance(jogo, Jogo)):
+            super().update(jogo)
 
-    def get(self, key:int):
-        if isinstance(key, int):
-            return super().get(key)
+    def get(self, key):
+        return super().get(key)
 
-    def remove(selfself, key:int):
-        if(isinstance(key, int)):
-            return super().remove(key)
+    def remove(self, key):
+        return super().remove(key)
