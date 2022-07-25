@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import PySimpleGUI as sg
 
 class Tela(ABC):
     @abstractmethod
@@ -23,3 +24,6 @@ class Tela(ABC):
     #metodo facilitador para mostrar mensagens pequenas.
     def mostrar_mensagem(self, mensagem: str = "",mensagem2: str = ""):
         print(mensagem + mensagem2)
+
+    def mostra_mensagem(self, msg):
+        sg.popup("", msg)
