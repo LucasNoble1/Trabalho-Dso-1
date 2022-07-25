@@ -1,23 +1,20 @@
 from DAOs.dao import DAO
-from model.Pergunta import Pergunta
+from model.pergunta import Pergunta
 
-#cada entidade terá uma classe dessa, implementação bem simples.
 class PerguntaDAO(DAO):
     def __init__(self):
         super().__init__('pergunta.pkl')
 
     def add(self, pergunta: Pergunta):
-        if((pergunta is not None) and isinstance(pergunta, Pergunta) and isinstance(pergunta.codigo, int)):
-            super().add(pergunta.codigo, pergunta)
+        if((pergunta is not None) and isinstance(pergunta, Pergunta)):
+            super().add(pergunta)
 
     def update(self, pergunta: Pergunta):
-        if((pergunta is not None) and isinstance(pergunta, Pergunta) and isinstance(pergunta.codigo, int)):
-            super().update(pergunta.codigo, pergunta)
+        if((pergunta is not None) and isinstance(pergunta, Pergunta)):
+            super().update(pergunta)
 
-    def get(self, key:int):
-        if isinstance(key, int):
+    def get(self, key):
             return super().get(key)
 
-    def remove(selfself, key:int):
-        if(isinstance(key, int)):
+    def remove(self, key):
             return super().remove(key)
