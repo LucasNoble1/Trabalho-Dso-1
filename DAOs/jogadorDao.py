@@ -5,19 +5,20 @@ from model.jogador import Jogador
 class JogadorDAO(DAO):
     def __init__(self):
         super().__init__('jogador.pkl')
-
+        self.__cache = []
+    #Adiciona jogador
     def add(self, jogador: Jogador):
-        if((jogador is not None) and isinstance(jogador, Jogador) and isinstance(jogador.nome, int)):
-            super().add(jogador.nome, jogador)
+        if((jogador is not None) and isinstance(jogador, Jogador)):
+            super().add(jogador)
 
     def update(self, jogador: Jogador):
-        if((jogador is not None) and isinstance(jogador, Jogador) and isinstance(jogador.nome, int)):
-            super().update(jogador.cpf, jogador)
+        if((jogador is not None) and isinstance(jogador, Jogador)):
+            super().update(jogador)
 
-    def get(self, key:int):
-        if isinstance(key, int):
-            return super().get(key)
+    #retorna o jogador, dono do cpf (key)
+    def get(self, key):
+        return super().get(key)
 
-    def remove(selfself, key:int):
-        if(isinstance(key, int)):
-            return super().remove(key)
+    #remove jogador dono do cpf(key)
+    def remove(self, key):
+        return super().remove(key)
